@@ -1,155 +1,132 @@
-CityMall Myanmar Electronics Web Scraper
+ CityMall Myanmar Electronics Web Scraper
+
 A Python web scraper that extracts product names and prices from the Electronics category of CityMall Myanmar's online store.
 
-Features
-Automatic Pagination: Scrapes multiple pages of product listings
+ Features
 
-Robust Error Handling: Implements retry logic with exponential backoff for failed requests
+- **Automatic Pagination**: Scrapes multiple pages of product listings
+- **Robust Error Handling**: Implements retry logic with exponential backoff for failed requests
+- **Progress Tracking**: Uses tqdm for real-time progress visualization
+- **Data Export**: Saves extracted data to Excel files with timestamps
+- **User-Agent Rotation**: Mimics browser requests to avoid blocking
 
-Progress Tracking: Uses tqdm for real-time progress visualization
+ Installation
 
-Data Export: Saves extracted data to Excel files with timestamps
+ Prerequisites
+- Python 3.7+
+- pip package manager
 
-User-Agent Rotation: Mimics browser requests to avoid blocking
-
-Installation
-Prerequisites
-Python 3.7+
-
-pip package manager
-
-Install Required Libraries
-bash
+ Install Required Libraries
+```bash
 pip install requests beautifulsoup4 pandas tqdm html5lib
-Usage
-Basic Usage
-python
+```
+
+ Usage
+
+ Basic Usage
+```python
 python scraper.py
+```
+
 The script will:
+1. Extract product data from the first 20 pages of the Electronics category
+2. Save the data to an Excel file with a timestamp (e.g., `Output 14-30-45.xlsx`)
 
-Extract product data from the first 20 pages of the Electronics category
-
-Save the data to an Excel file with a timestamp (e.g., Output 14-30-45.xlsx)
-
-Configuration
+ Configuration
 You can modify the following in the script:
 
-Number of pages to scrape: Change range(0, 20+1) in the main() function
+1. **Number of pages to scrape**: Change `range(0, 20+1)` in the `main()` function
+2. **Target URL**: Modify the base URL in the `main()` function
+3. **Delay between requests**: Adjust `time.sleep(0)` in the main loop
 
-Target URL: Modify the base URL in the main() function
+ Project Structure
 
-Delay between requests: Adjust time.sleep(0) in the main loop
+ Main Functions
 
-Project Structure
-Main Functions
-extract_last_page_number():
+1. `extract_last_page_number()`: 
+   - Extracts the total number of pages available for the category
+   - Note: Currently commented out in the main function
 
-Extracts the total number of pages available for the category
+2. `extract_product_name(tag)`:
+   - Extracts product names from HTML tags
+   - Handles the product name element structure
 
-Note: Currently commented out in the main function
+3. `extract_product_price(tag)`:
+   - Extracts product prices from HTML tags
+   - Handles both regular and sale prices
+   - Cleans price data (removes "Ks" and commas)
 
-extract_product_name(tag):
+4. `main()`:
+   - Main execution function
+   - Manages pagination, data extraction, and file export
 
-Extracts product names from HTML tags
-
-Handles the product name element structure
-
-extract_product_price(tag):
-
-Extracts product prices from HTML tags
-
-Handles both regular and sale prices
-
-Cleans price data (removes "Ks" and commas)
-
-main():
-
-Main execution function
-
-Manages pagination, data extraction, and file export
-
-Data Output
+ Data Output
 The script creates an Excel file containing:
+- **Product Name**: Name of the electronics product
+- **Product Price**: Cleaned price (numeric format)
 
-Product Name: Name of the electronics product
+ Error Handling
 
-Product Price: Cleaned price (numeric format)
-
-Error Handling
 The script includes several error handling features:
+- **Retry Mechanism**: Retries failed requests up to 5 times
+- **HTTP Status Codes**: Handles 429, 500, 502, 503, and 504 errors
+- **Timeout**: 30-second timeout for requests
+- **Exception Handling**: Graceful handling of missing elements
 
-Retry Mechanism: Retries failed requests up to 5 times
+ Dependencies
 
-HTTP Status Codes: Handles 429, 500, 502, 503, and 504 errors
+- `requests`: HTTP requests
+- `beautifulsoup4`: HTML parsing
+- `pandas`: Data manipulation and Excel export
+- `tqdm`: Progress bar
+- `html5lib`: HTML parser
+- `urllib3`: HTTP client utilities
 
-Timeout: 30-second timeout for requests
+ Important Notes
 
-Exception Handling: Graceful handling of missing elements
+ Legal Considerations
+- This script is for educational purposes only
+- Check CityMall's Terms of Service and robots.txt before use
+- Respect website's crawling policies and rate limits
+- Consider adding delays between requests to avoid overloading servers
 
-Dependencies
-requests: HTTP requests
+### Technical Notes
+- The script uses a custom User-Agent header to mimic a browser
+- HTML5 parser is used for better compatibility with modern websites
+- Session management is implemented for connection pooling
 
-beautifulsoup4: HTML parsing
+## Customization
 
-pandas: Data manipulation and Excel export
-
-tqdm: Progress bar
-
-html5lib: HTML parser
-
-urllib3: HTTP client utilities
-
-Important Notes
-Legal Considerations
-This script is for educational purposes only
-
-Check CityMall's Terms of Service and robots.txt before use
-
-Respect website's crawling policies and rate limits
-
-Consider adding delays between requests to avoid overloading servers
-
-Technical Notes
-The script uses a custom User-Agent header to mimic a browser
-
-HTML5 parser is used for better compatibility with modern websites
-
-Session management is implemented for connection pooling
-
-Customization
 To scrape different categories:
+1. Update the base URL in the `main()` function
+2. Adjust the CSS selectors in the extraction functions if needed
 
-Update the base URL in the main() function
+ Troubleshooting
 
-Adjust the CSS selectors in the extraction functions if needed
+ Common Issues
 
-Troubleshooting
-Common Issues
-Connection Errors:
+1. **Connection Errors**:
+   - Check internet connection
+   - Verify the target URL is accessible
 
-Check internet connection
+2. **Blocked Requests**:
+   - Increase delays between requests
+   - Rotate User-Agent strings
+   - Use proxy servers if necessary
 
-Verify the target URL is accessible
+3. **Missing Data**:
+   - Verify CSS selectors are still valid
+   - Check if website structure has changed
 
-Blocked Requests:
+ Contributing
 
-Increase delays between requests
-
-Rotate User-Agent strings
-
-Use proxy servers if necessary
-
-Missing Data:
-
-Verify CSS selectors are still valid
-
-Check if website structure has changed
-
-Contributing
 Feel free to fork this project and submit pull requests with improvements.
 
-License
+ License
+
 This project is for educational purposes. Use responsibly and in accordance with the target website's terms of service.
 
-Disclaimer
+ Disclaimer
+
 This tool is intended for educational purposes only. The authors are not responsible for any misuse or damages caused by this software. Always respect websites' terms of service and robots.txt files.
+
